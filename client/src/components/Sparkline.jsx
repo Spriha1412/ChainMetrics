@@ -17,7 +17,7 @@ export default function Sparkline({ data = [], positive = true }) {
 
   return (
     <svg className="sparkline" viewBox={`0 0 ${width} ${height}`} aria-hidden="true">
-      <polyline points={points} fill="none" stroke={positive ? "#2f6b4a" : "#ac4f3a"} strokeWidth="2.2" />
+      <polyline points={points} fill="none" stroke={positive ? "var(--positive)" : "var(--negative)"} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }

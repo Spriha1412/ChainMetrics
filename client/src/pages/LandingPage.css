@@ -1,0 +1,109 @@
+.landing-page-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    background-color: var(--bg);
+    /* Use theme bg so the transition is smooth */
+}
+
+/* Ensure the globe sits behind the text but is still interactive */
+.landing-page-container .globe-section {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.landing-content {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    pointer-events: none;
+    /* Let clicks pass through if needed */
+}
+
+.landing-title {
+    font-size: clamp(3rem, 8vw, 6rem);
+    font-weight: 800;
+    letter-spacing: -1px;
+    margin: 0;
+    background: linear-gradient(to right, #ffffff, #8da4f7, #00ffa3);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 0 30px rgba(98, 126, 234, 0.4);
+    animation: glow 3s ease-in-out infinite alternate;
+}
+
+
+.launch-btn {
+    pointer-events: auto;
+    /* Enable clicks on button */
+    padding: 1rem 3rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: white;
+    background: linear-gradient(135deg, #0f172a, #1e293b);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 20px rgba(0, 255, 163, 0.2), inset 0 0 10px rgba(255, 255, 255, 0.1);
+    letter-spacing: 1px;
+}
+
+.launch-btn:hover {
+    transform: translateY(-2px);
+    background: linear-gradient(135deg, #1e293b, #334155);
+    box-shadow: 0 0 30px rgba(0, 255, 163, 0.4), inset 0 0 15px rgba(255, 255, 255, 0.2);
+    border-color: rgba(0, 255, 163, 0.5);
+}
+
+@keyframes glow {
+    from {
+        text-shadow: 0 0 20px rgba(98, 126, 234, 0.3), 0 0 40px rgba(98, 126, 234, 0.2);
+    }
+
+    to {
+        text-shadow: 0 0 30px rgba(98, 126, 234, 0.6), 0 0 60px rgba(98, 126, 234, 0.4);
+    }
+}
+
+.loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.loading-spinner {
+    width: 48px;
+    height: 48px;
+    border: 4px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    border-top-color: #00ffa3;
+    animation: spin-speed 1s ease-in-out infinite;
+    box-shadow: 0 0 20px rgba(0, 255, 163, 0.2);
+}
+
+@keyframes spin-speed {
+    to {
+        transform: rotate(360deg);
+    }
+}

@@ -1,0 +1,113 @@
+.globe-section {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: visible;
+}
+
+.globe-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 5;
+}
+
+/* Glowing Crypto Marker */
+.crypto-marker {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 16px;
+  color: white;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transform: translate(-50%, -50%);
+  /* Center on coordinate */
+  user-select: none;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+}
+
+.crypto-marker:hover {
+  transform: translate(-50%, -50%) scale(1.2);
+  z-index: 10;
+}
+
+.crypto-marker.btc {
+  background: linear-gradient(135deg, #f7931a, #ffb347);
+  box-shadow: 0 0 15px rgba(247, 147, 26, 0.6);
+}
+
+.crypto-marker.eth {
+  background: linear-gradient(135deg, #627eea, #8da4f7);
+  box-shadow: 0 0 15px rgba(98, 126, 234, 0.6);
+}
+
+.crypto-marker.bnb {
+  background: linear-gradient(135deg, #f3ba2f, #f9d371);
+  box-shadow: 0 0 15px rgba(243, 186, 47, 0.6);
+}
+
+.crypto-marker.sol {
+  background: linear-gradient(135deg, #00ffa3, #03e1ff, #dc1fff);
+  box-shadow: 0 0 15px rgba(3, 225, 255, 0.6);
+}
+
+.crypto-marker.ada {
+  background: linear-gradient(135deg, #0033ad, #3366ff);
+  box-shadow: 0 0 15px rgba(0, 51, 173, 0.6);
+}
+
+.crypto-marker.xrp {
+  background: linear-gradient(135deg, #23292f, #4a5460);
+  box-shadow: 0 0 15px rgba(35, 41, 47, 0.6);
+}
+
+.crypto-marker.dot {
+  background: linear-gradient(135deg, #e6007a, #ff3399);
+  box-shadow: 0 0 15px rgba(230, 0, 122, 0.6);
+}
+
+.crypto-marker.doge {
+  background: linear-gradient(135deg, #c2a633, #e8cc55);
+  box-shadow: 0 0 15px rgba(194, 166, 51, 0.6);
+}
+
+.crypto-marker.matic {
+  background: linear-gradient(135deg, #8247e5, #a371f7);
+  box-shadow: 0 0 15px rgba(130, 71, 229, 0.6);
+}
+
+.crypto-marker.avax {
+  background: linear-gradient(135deg, #e84142, #ff6b6b);
+  box-shadow: 0 0 15px rgba(232, 65, 66, 0.6);
+}
+
+/* Fallback generic marker */
+.crypto-marker.generic {
+  background: linear-gradient(135deg, #00ffcc, #0099ff);
+  box-shadow: 0 0 15px rgba(0, 255, 204, 0.6);
+}
+
+/* Tooltip for globe markers */
+.globe-tooltip {
+  background: rgba(15, 20, 35, 0.9);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 8px 12px;
+  border-radius: 6px;
+  color: white;
+  font-family: inherit;
+  font-size: 14px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  pointer-events: none;
+}

@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { formatPercent } from "../utils/formatters";
 
-function MoversList({ title, coins, className }) {
+function MoversList({ title, coins, isPositive }) {
   const navigate = useNavigate();
 
   return (
@@ -11,8 +11,10 @@ function MoversList({ title, coins, className }) {
         {coins.map((coin) => (
           <li key={coin.id}>
             <button type="button" onClick={() => navigate(`/coin/${coin.id}`)}>
-              <span>{coin.symbol.toUpperCase()}</span>
-              <span className={className}>{formatPercent(coin.price_change_percentage_24h || 0)}</span>
+              <span style={{ fontWeight: 600 }}>{coin.symbol.toUpperCase()}</span>
+              <span className={`pct-badge ${isPositive ? "positive" : "negative"}`}>
+                {formatPercent(coin.price_change_percentage_24h || 0)}
+              </span>
             </button>
           </li>
         ))}
@@ -24,8 +26,8 @@ function MoversList({ title, coins, className }) {
 export default function MoversSection({ gainers = [], losers = [] }) {
   return (
     <section className="movers-wrap">
-      <MoversList title="Top Gainers" coins={gainers} className="positive" />
-      <MoversList title="Top Losers" coins={losers} className="negative" />
+      <MoversList title="Top Gainers" coins={gainers} isPositive={true} />
+      <MoversList title="Top Losers" coins={losers} isPositive={false} />
     </section>
   );
 }

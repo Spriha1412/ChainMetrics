@@ -19,24 +19,31 @@ export default function MarketTable({ coins, isLoading }) {
               <th>Rank</th>
               <th>Coin</th>
               <th>Price</th>
-              <th>24h</th>
+              <th>24h Change</th>
               <th>Market Cap</th>
               <th>Volume</th>
               <th>7D</th>
-              <th>Watch</th>
+              <th>Watchlist</th>
             </tr>
           </thead>
           <tbody>
             {isLoading ? (
               <TableSkeleton rows={10} />
             ) : (
-              coins.map((coin) => {
+              coins.map((coin, i) => {
                 const isPositive = (coin.price_change_percentage_24h || 0) >= 0;
                 const isSaved = watchlist.includes(coin.id);
 
                 return (
-                  <tr key={coin.id} onClick={() => navigate(`/coin/${coin.id}`)} className="clickable-row">
-                    <td>{coin.market_cap_rank || "-"}</td>
+                  <tr
+                    key={coin.id}
+                    onClick={() => navigate(`/coin/${coin.id}`)}
+                    className="clickable-row"
+                    style={{ animationDelay: `${i * 30}ms` }}
+                  >
+                    <td style={{ color: "var(--muted)", fontWeight: 600, fontSize: "0.78rem" }}>
+                      {coin.market_cap_rank || "—"}
+                    </td>
                     <td>
                       <div className="coin-cell">
                         <img src={coin.image} alt={`${coin.name} logo`} loading="lazy" />
@@ -46,12 +53,16 @@ export default function MarketTable({ coins, isLoading }) {
                         </div>
                       </div>
                     </td>
-                    <td>{formatCurrency(coin.current_price)}</td>
-                    <td className={isPositive ? "positive" : "negative"}>
-                      {formatPercent(coin.price_change_percentage_24h || 0)}
+                    <td style={{ fontWeight: 600, fontFamily: "'JetBrains Mono', monospace", letterSpacing: "-0.02em" }}>
+                      {formatCurrency(coin.current_price)}
                     </td>
-                    <td>{formatCompactCurrency(coin.market_cap)}</td>
-                    <td>{formatCompactCurrency(coin.total_volume)}</td>
+                    <td>
+                      <span className={`pct-badge ${isPositive ? "positive" : "negative"}`}>
+                        {formatPercent(coin.price_change_percentage_24h || 0)}
+                      </span>
+                    </td>
+                    <td style={{ color: "var(--text-2)" }}>{formatCompactCurrency(coin.market_cap)}</td>
+                    <td style={{ color: "var(--text-2)" }}>{formatCompactCurrency(coin.total_volume)}</td>
                     <td>
                       <Sparkline data={coin.sparkline_in_7d?.price || []} positive={isPositive} />
                     </td>
@@ -64,7 +75,7 @@ export default function MarketTable({ coins, isLoading }) {
                           toggleWatchlist(coin.id);
                         }}
                       >
-                        {isSaved ? "Saved" : "Add"}
+                        {isSaved ? "✦ Saved" : "Add"}
                       </button>
                     </td>
                   </tr>

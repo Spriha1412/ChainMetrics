@@ -1,0 +1,118 @@
+.flowing-coins-wrapper {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    /* higher than background but behind main content */
+    overflow: hidden;
+    perspective: 1500px;
+}
+
+.flowing-coin-anchor {
+    position: absolute;
+    top: 110%;
+    /* Start below the screen */
+    transform-style: preserve-3d;
+    animation: flowUp linear infinite;
+    opacity: 0.15;
+    /* Reduced visibility */
+}
+
+@keyframes flowUp {
+    0% {
+        transform: translateY(0) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+    }
+
+    100% {
+        /* Flow up to above the screen. 
+       The --rx, --ry, --rz variables are set dynamically in the JSX component 
+       to give each coin a unique tumble */
+        transform: translateY(-130vh) rotateX(var(--rx)) rotateY(var(--ry)) rotateZ(var(--rz));
+    }
+}
+
+.flowing-coin-3d {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+}
+
+/* Base styles for the faces */
+.coin-face,
+.coin-layer {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+
+.coin-face {
+    background-size: 55% 55%;
+    background-position: center;
+    background-repeat: no-repeat;
+    box-shadow: inset 0 0 15px rgba(255, 255, 255, 0.5), inset 0 0 5px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    z-index: 2;
+    backface-visibility: hidden;
+}
+
+.coin-layer {
+    /* inner layers for edge thickness trick */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.coin-face.front {
+    transform: translateZ(5px);
+}
+
+.coin-face.back {
+    transform: rotateY(180deg) translateZ(5px);
+}
+
+/* ── Colors and SVGs for Coins ── */
+
+/* BTC - Gold */
+.flowing-coin-3d.btc .coin-face {
+    background-color: #F7931A;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath fill='%23FFF' d='M23.953 14.286c.642-4.281-2.585-6.556-6.958-8.064l1.423-5.717-3.469-.864-1.393 5.592c-.911-.227-1.849-.441-2.775-.65l1.4-5.618-3.469-.864-1.423 5.717c-.752-.172-1.488-.337-2.19-.508l.001-.005-4.789-1.192-.924 3.712s2.578.591 2.522.628c1.407.35 1.662 1.282 1.623 2.019l-1.628 6.536c.099.025.228.062.365.116l-.368-.092-2.288 9.183c-.2.502-.733 1.259-1.928.962.035.053-2.525-.629-2.525-.629l-1.724 3.987 4.524 1.127c.839.209 1.666.425 2.483.633l-1.439 5.782 3.469.864 1.424-5.717c.947.253 1.868.491 2.766.711l-1.411 5.679 3.469.864 1.442-5.792c5.858 1.11 10.264.664 12.115-4.634 1.485-4.253-.306-6.7-3.456-8.293 2.459-.569 4.312-1.936 4.847-4.881zm-6.173 13.064c-1.673 6.721-12.977 3.033-16.635 2.122l2.972-11.939c3.659.911 15.367 2.949 13.663 9.817zm1.187-10.428c-1.523 6.11-10.963 2.87-14.053 2.101l2.695-10.824c3.09.77 12.909 2.501 11.358 8.723z'/%3E%3C/svg%3E");
+}
+
+.flowing-coin-3d.btc .coin-layer {
+    background-color: #DDAA00;
+}
+
+/* ETH - Deep Blue / Purple */
+.flowing-coin-3d.eth .coin-face {
+    background-color: #627EEA;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath fill='%23FFF' d='M15.925 23.969l-9.819-5.799 9.819 13.83 9.824-13.83-9.824 5.799zm.067-23.969l-9.892 16.402 9.892 5.86 9.896-5.86-9.896-16.402z'/%3E%3C/svg%3E");
+}
+
+.flowing-coin-3d.eth .coin-layer {
+    background-color: #4A65C7;
+}
+
+/* SOL - Gradient Green/Blue */
+.flowing-coin-3d.sol .coin-face {
+    background-color: #14F195;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath fill='%23FFF' d='M6.295 10.354l3.193-5.286h17.904l-3.239 5.286H6.295zm19.41 6.18h-17.9l3.238-5.286h17.9l-3.238 5.286zm-19.41 6.18l3.193-5.286h17.904l-3.239 5.286H6.295z'/%3E%3C/svg%3E");
+}
+
+.flowing-coin-3d.sol .coin-layer {
+    background-color: #02D1D1;
+}
+
+/* ADA - Blue */
+.flowing-coin-3d.ada .coin-face {
+    background-color: #0033AD;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath fill='%23FFF' d='M16.033 26.541c-5.808 0-10.518-4.71-10.518-10.518s4.711-10.519 10.518-10.519c5.809 0 10.519 4.71 10.519 10.519s-4.71 10.518-10.519 10.518zm0-18.068c-4.17 0-7.549 3.38-7.549 7.549s3.38 7.549 7.549 7.549 7.549-3.38 7.549-7.549-3.38-7.549-7.549-7.549zM16.033 7.828c-.546 0-.989-.443-.989-.989v-2.18c0-.546.443-.989.989-.989s.989.443.989.989v2.18c0 .546-.443.989-.989.989zm0 20.482c-.546 0-.989-.443-.989-.989v-2.18c0-.546.443-.989.989-.989s.989.443.989.989v2.18c0 .546-.443.989-.989.989zm10.24-9.251h2.181c.546 0 .989.443.989.989s-.443.989-.989.989h-2.181c-.546 0-.989-.443-.989-.989s.443-.989.989-.989zm-20.482 0h-2.18c-.546 0-.989.443-.989.989s.443.989.989.989h2.18c.546 0 .989-.443.989-.989s-.443-.989-.989-.989zm17.481-7.243l1.543-1.543c.385-.385.385-1.01 0-1.396s-1.01-.385-1.396 0l-1.543 1.543c-.385.385-.385 1.01 0 1.396.385.386 1.01.386 1.396 0zm-14.48 14.481l-1.543 1.543c-.385.385-.385 1.01 0 1.396s1.01.385 1.396 0l1.543-1.543c.385-.385.385-1.01 0-1.396-.386-.386-1.011-.386-1.396 0zm14.48 1.401c-.385-.385-1.01-.385-1.396 0s-.385 1.01 0 1.396l1.543 1.543c.385.385 1.01.385 1.396 0s.385-1.01 0-1.396l-1.543-1.543zm-14.48-14.481c-.385-.385-1.01-.385-1.396 0s-.385 1.01 0 1.396l1.543 1.543c.385.385 1.01.385 1.396 0s.385-1.01 0-1.396l-1.543-1.543z'/%3E%3C/svg%3E");
+}
+
+.flowing-coin-3d.ada .coin-layer {
+    background-color: #002277;
+}
+
+/* Responsive / Light Theme Adjustments */
+body[data-theme="light"] .flowing-coins-wrapper {
+    opacity: 0.4;
+}

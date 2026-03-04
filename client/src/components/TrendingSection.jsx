@@ -19,7 +19,7 @@ export default function TrendingSection({ coins = [] }) {
               <strong>{coin.name}</strong>
               <span>{coin.symbol}</span>
             </div>
-            <span className="rank-pill">#{coin.market_cap_rank || "-"}</span>
+            <span className="rank-pill">#{coin.market_cap_rank || "—"}</span>
           </button>
         ))}
       </div>
