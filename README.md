@@ -1,4 +1,4 @@
-# CryptoTracker
+# ChainMetrics
 
 A production-style cryptocurrency tracking web app inspired by CoinMarketCap, with a cleaner architecture and a premium beige/brown UI.
 
