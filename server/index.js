@@ -3,10 +3,11 @@ const express = require("express");
 const cors = require("cors");
 const axios = require("axios");
 const NodeCache = require("node-cache");
+const path = require("path");
 
 const app = express();
 const PORT = process.env.PORT || 5001;
-const CLIENT_ORIGIN = process.env.CLIENT_ORIGIN || "http://localhost:5173";
+const CLIENT_ORIGIN = process.env.CLIENT_ORIGIN;
 
 const cache = new NodeCache({
   stdTTL: 45,
@@ -14,7 +15,7 @@ const cache = new NodeCache({
   useClones: false,
 });
 
-app.use(cors({ origin: CLIENT_ORIGIN }));
+app.use(cors({ origin: CLIENT_ORIGIN || "*" }));
 app.use(express.json());
 
 const cg = axios.create({
@@ -210,6 +211,19 @@ app.get("/api/markets", async (req, res) => {
   } catch (error) {
     handleApiError(error, res);
   }
+});
+
+// Serve client built static files
+const distPath = path.join(__dirname, "../client/dist");
+app.use(express.static(distPath));
+
+// Fallback to index.html for SPA (React Router) routing
+app.get("*any", (req, res) => {
+  // If it starts with /api/, send a JSON 404 instead of index.html
+  if (req.path.startsWith("/api/")) {
+    return res.status(404).json({ error: "Not Found" });
+  }
+  res.sendFile(path.join(distPath, "index.html"));
 });
 
 app.listen(PORT, () => {
